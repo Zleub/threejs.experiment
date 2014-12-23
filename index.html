@@ -7,11 +7,11 @@
 	</style>
 </head>
 <body>
-	<script src="three.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r69/three.min.js"></script>
 	<script>
 		function log(object) { console.log(object) }
 
-		var scene1 = new THREE.Scene();
+		var scene = new THREE.Scene();
 		var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
 		var renderer = new THREE.WebGLRenderer();
@@ -22,11 +22,11 @@
 
 		function add_box(offx, offy, offz)
 		{
-			var s = new THREE.Mesh( geometry );
+			var s = new THREE.Mesh( geometry , new THREE.MeshBasicMaterial({color: '#DDDDDD', wireframe: true}));
 			s.position.x = offx;
 			s.position.y = offy;
 			s.position.z = offz;
-			scene1.add( s );
+			scene.add( s );
 		}
 
 		function make_matricial_scene(x, y, z)
@@ -45,31 +45,51 @@
 		}
 
 
-		var scene2 = new THREE.Scene();
+		// make_matricial_scene(5, 3, 3)
+		add_box(-0.5, 1, 0)
+		add_box(0.5, 1, 0)
+		add_box(-1.5, 1, 0)
+		add_box(1.5, 1, 0)
+		add_box(-0.5, 0, 0)
+		add_box(0.5, 0, 0)
+		add_box(-1.5, 0, 0)
+		add_box(1.5, 0, 0)
+		add_box(-0.5, -1, 0)
+		add_box(0.5, -1, 0)
+		add_box(-0.5, -2, 0)
+		add_box(0.5, -2, 0)
 
-		function add_box2(offx, offy, offz)
-		{
-			var s = new THREE.Mesh( geometry );
-			s.position.x = offx;
-			s.position.y = offy;
-			s.position.z = offz;
-			scene2.add( s );
-		}
+		var test1 = new THREE.Geometry();
+		test1.vertices.push(
+			new THREE.Vector3( -2, 1.5, 0.5 ),
+			new THREE.Vector3( -2, -0.5, 0.5 ),
+			new THREE.Vector3( 2, -0.5, 0.5 ),
+			new THREE.Vector3( 2, 1.5, 0.5)
+		);
 
+		test1.faces.push( new THREE.Face3( 0, 1, 2 ) );
+		test1.faces.push( new THREE.Face3( 3, 0, 2 ) );
 
-		// make_matricial_scene(15, 15, 15)
-		add_box(0, 0, 0)
+		scene.add(new THREE.Mesh(test1, new THREE.MeshBasicMaterial({color: '#DDDDDD'})))
 
-		add_box2(1, 0, 0)
+		var test2 = new THREE.Geometry();
+		test2.vertices.push(
+			new THREE.Vector3( -2, 1.5, -0.5 ),
+			new THREE.Vector3( -2, -0.5, -0.5 ),
+			new THREE.Vector3( 2, -0.5, -0.5 ),
+			new THREE.Vector3( 2, 1.5, -0.5)
+		);
 
-		scene = scene2
+		test2.faces.push( new THREE.Face3( 1, 0, 2 ) );
+		test2.faces.push( new THREE.Face3( 0, 3, 2 ) );
+
+		scene.add(new THREE.Mesh(test2, new THREE.MeshBasicMaterial({color: '#DDDDDD'})))
 
 		camera.position.z = 5;
 
 		var render = function () {
 			requestAnimationFrame( render );
-			renderer.render(scene2, camera);
-			renderer.render(scene1, camera);
+			renderer.render(scene, camera);
 		};
 
 		function keypressed(key)
@@ -121,11 +141,11 @@
 					break;
 				case 65:
 					//a key pressed
-					camera.rotateY(0.5);
+					camera.translateX(0.5);
 					break;
 				case 68:
 					//d key pressed
-					camera.rotateY(-0.5);
+					camera.translateX(-0.5);
 					break;
 
 				case 104:
@@ -155,6 +175,17 @@
 	window.addEventListener("keypress", keypressed, false);
 	window.addEventListener("keydown", keydown, false);
 	window.addEventListener("keyup", keyup, false);
+
+
+
+window.addEventListener('mousemove', function (e) {
+		var mouseX = ( e.clientX - window.innerWidth / 2 );
+		var mouseY = ( e.clientY - window.innerHeight / 2 );
+		scene.rotation.x = mouseY * 0.005;
+		scene.rotation.y = mouseX * 0.005;
+
+		renderer.render( scene, camera );
+	}, false);
 
 	render();
 </script>
