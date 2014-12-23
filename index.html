@@ -1,0 +1,162 @@
+<html>
+<head>
+	<title>My first Three.js app</title>
+	<style>
+		body { margin: 0; }
+		canvas { width: 100%; height: 100% }
+	</style>
+</head>
+<body>
+	<script src="three.min.js"></script>
+	<script>
+		function log(object) { console.log(object) }
+
+		var scene1 = new THREE.Scene();
+		var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+		var renderer = new THREE.WebGLRenderer();
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		var geometry = new THREE.BoxGeometry(1, 1, 1)
+
+		function add_box(offx, offy, offz)
+		{
+			var s = new THREE.Mesh( geometry );
+			s.position.x = offx;
+			s.position.y = offy;
+			s.position.z = offz;
+			scene1.add( s );
+		}
+
+		function make_matricial_scene(x, y, z)
+		{
+			for (var i = -x; i < x; i++)
+				for (var j = -y; j < y; j++)
+					for (var k = -z; k < z; k++)
+						add_box(i, j, k)
+		}
+
+		function make_matricial_scene_2d(x, y)
+		{
+			for (var i = -x; i < x; i++)
+				for (var j = -y; j < y; j++)
+					add_box(i, j, 0)
+		}
+
+
+		var scene2 = new THREE.Scene();
+
+		function add_box2(offx, offy, offz)
+		{
+			var s = new THREE.Mesh( geometry );
+			s.position.x = offx;
+			s.position.y = offy;
+			s.position.z = offz;
+			scene2.add( s );
+		}
+
+
+		// make_matricial_scene(15, 15, 15)
+		add_box(0, 0, 0)
+
+		add_box2(1, 0, 0)
+
+		scene = scene2
+
+		camera.position.z = 5;
+
+		var render = function () {
+			requestAnimationFrame( render );
+			renderer.render(scene2, camera);
+			renderer.render(scene1, camera);
+		};
+
+		function keypressed(key)
+		{
+			// log('keypressed')
+			// log(key)
+		}
+		function keydown(key)
+		{
+			log(key.keyCode)
+			switch(key.keyCode) {
+				// case 13:
+				// 	shape = add_box();
+				// 	break;
+				case 37:
+					//left key pressed
+					scene.rotation.y -= 0.1
+					break;
+				case 38:
+					// up key pressed
+					scene.rotation.x -= 0.1
+					break;
+				case 39:
+					// right key pressed
+					scene.rotation.y += 0.1
+					break;
+				case 40:
+					//down key pressed
+					scene.rotation.x += 0.1
+					break;
+
+				case 49:
+					//down key pressed
+					scene = scene1
+					break;
+				case 50:
+					//down key pressed
+					scene = scene2
+					break;
+
+
+				case 87:
+					//s key pressed
+					camera.translateZ(-0.5);
+					break;
+				case 83:
+					//w key pressed
+					camera.translateZ(0.5);
+					break;
+				case 65:
+					//a key pressed
+					camera.rotateY(0.5);
+					break;
+				case 68:
+					//d key pressed
+					camera.rotateY(-0.5);
+					break;
+
+				case 104:
+					//8 key pressed
+					shape.position.y += 0.1
+					break;
+				case 98:
+					//2 key pressed
+					shape.position.y -= 0.1
+					break;
+				case 102:
+					// 6 key pressed
+					shape.position.x += 0.1
+					break;
+				case 100:
+					//4 key pressed
+					shape.position.x -= 0.1
+					break;
+		}
+	}
+	function keyup(key)
+	{
+		// log('keypressed')
+		// log(key)
+	}
+
+	window.addEventListener("keypress", keypressed, false);
+	window.addEventListener("keydown", keydown, false);
+	window.addEventListener("keyup", keyup, false);
+
+	render();
+</script>
+</body>
+</html>
