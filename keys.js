@@ -13,22 +13,29 @@ function keydown(key)
 		// 	shape = add_box();
 		// 	break;
 
-		case 37:
-			//left key pressed
-			scene.rotation.y -= 0.1
-			break;
-		case 38:
-			// up key pressed
-			scene.rotation.x -= 0.1
-			break;
-		case 39:
-			// right key pressed
-			scene.rotation.y += 0.1
-			break;
-		case 40:
-			//down key pressed
-			scene.rotation.x += 0.1
-			break;
+		// case 37:
+		// 	//left key pressed
+		// 	scene.rotation.y -= 0.1
+		// 	break;
+		// case 38:
+		// 	// up key pressed
+		// 	scene.rotation.x -= 0.1
+		// 	break;
+		// case 39:
+		// 	// right key pressed
+		// 	scene.rotation.y += 0.1
+		// 	break;
+		// case 40:
+		// 	//down key pressed
+		// 	scene.rotation.x += 0.1
+		// 	break;
+
+
+		// case 16:
+		// 	//leftshift
+
+
+
 
 		case 49:
 			//1 key pressed
@@ -39,22 +46,41 @@ function keydown(key)
 			scene = scene2
 			break;
 
-
+		case 32:
+			//space key pressed
+			camera.translateY(0.5 * scale);
+			break;
+		case 82:
+			//r key pressed
+			camera.rotateX(0.05 * scale);
+			break;
+		case 70:
+			//f key pressed
+			camera.rotateX(-0.05 * scale);
+			break;
+		case 69:
+			//e key pressed
+			camera.rotateY(-0.05 * scale);
+			break;
+		case 81:
+			//q key pressed
+			camera.rotateY(0.05 * scale);
+			break;
 		case 87:
 			//s key pressed
-			camera.translateZ(-0.5);
+			camera.translateZ(-0.5 * scale);
 			break;
 		case 83:
 			//w key pressed
-			camera.translateZ(0.5);
+			camera.translateZ(0.5 * scale);
 			break;
 		case 65:
 			//a key pressed
-			camera.translateX(0.5);
+			camera.translateX(-0.5 * scale);
 			break;
 		case 68:
 			//d key pressed
-			camera.translateX(-0.5);
+			camera.translateX(0.5 * scale);
 			break;
 
 		case 104:
